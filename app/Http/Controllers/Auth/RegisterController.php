@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use DB;
+use App\Http\Requests\RegisterFormRequest;
 
 use App\Models\Users\Subjects;
 
@@ -57,26 +58,16 @@ class RegisterController extends Controller
         return view('auth.register.register', compact('subjects'));
     }
 
-    protected function registerValidator(array $v_data)
-    {
-        return Validator::make($v_data, [
-            'over_name' => 'required|string|max:10',
-            'under_name' => 'required|string|max:10',
-            'over_name_kana' => 'required|string|max:30',
-            'under_name_kana' => 'required|string|max:30',
-            'mail_address' => 'required|email|max:100|unique:users,mail_address',
-            'sex'=>'required',
-            'birth_day'=>'required|date|after:2000-01-01|before:today',
-            'role'=>'required',
-            'password' => 'required|min:8|max:30|confirmed',
-            'password_confirmation'=>'required|min:8|max:30'
-        ]);
-    }
+    // protected function registerValidator(array $v_data)
+    // {
+    //     return Validator::make($v_data, [
+    //     ]);
+    // }
 
-    public function registerPost(Request $request)
+    public function registerPost(RegisterFormRequest $request)
     {
-    //     DB::beginTransaction();
-    //     try{
+        DB::beginTransaction();
+        try{
             $old_year = $request->old_year;
             $old_month = $request->old_month;
             $old_day = $request->old_day;
@@ -84,48 +75,28 @@ class RegisterController extends Controller
             $birth_day = date('Y-m-d', strtotime($data));
             $subjects = $request->subject;
 
-            $v_request=$request->input();
-            $v_data=$v_request;
-            $validator=$this->registerValidator($v_data);
-
-            if($validator->fails()){
-                dd($validator);
-                return redirect('register')
-                ->withErrors($validator)->withInput();
-            }
-            // $user_get = User::create([
-            //     'over_name' => $request->over_name,
-            //     'under_name' => $request->under_name,
-            //     'over_name_kana' => $request->over_name_kana,
-            //     'under_name_kana' => $request->under_name_kana,
-            //     'mail_address' => $request->mail_address,
-            //     'sex' => $request->sex,
-            //     'birth_day' => $birth_day,
-            //     'role' => $request->role,
-            //     'password' => bcrypt($request->password)
-            // ]);
-
             $user_get = User::create([
-                'over_name' => $this->over_name,
-                'under_name' => $this->under_name,
-                'over_name_kana' => $this->over_name_kana,
-                'under_name_kana' => $this->under_name_kana,
-                'mail_address' => $this->mail_address,
-                'sex' => $this->sex,
-                'birth_day'=>$this->birth_day,
-                'role' => $this->role,
-                'password' => bcrypt($this->password)
+                'over_name' => $request->over_name,
+                'under_name' => $request->under_name,
+                'over_name_kana' => $request->over_name_kana,
+                'under_name_kana' => $request->under_name_kana,
+                'mail_address' => $request->mail_address,
+                'sex' => $request->sex,
+                'birth_day' => $birth_day,
+                'role' => $request->role,
+                'password' => bcrypt($request->password)
             ]);
-            dd($user_get);
+
+            // dd($user_get);
 
             $user = User::findOrFail($user_get->id);
             $user->subjects()->attach($subjects);
-            // DB::commit();
+            DB::commit();
             return view('auth.login.login');
-        // }catch(\Exception $e){
-        //     DB::rollback();
-        //     return redirect()->route('loginView');
-        // }
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect()->route('loginView');
+        }
 
     }
 }

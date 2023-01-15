@@ -31,10 +31,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <span class="help-block">{{$errors->first('over_name')}}</span>
-                    <span class="help-block">{{$errors->first('under_name')}}</span> -->
-
+                    @if($errors->first('over_name','under_name'))
+                    <span class="error_message">{{$errors->first('over_name')}}</span><br>
+                    <span class="error_message">{{$errors->first('under_name')}}</span>
+                    @endif
                     <div class="d-flex mt-3" style="justify-content:space-between">
                         <div class="" style="width:140px">
                         <label class="d-block m-0" style="font-size:13px">セイ</label>
@@ -49,19 +49,19 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <span class="help-block">{{$errors->first('over_name_kana')}}</span>
-                    <span class="help-block">{{$errors->first('under_name_kana')}}</span> -->
-
+                    @if($errors->first('over_name','under_name'))
+                    <span class="error_message">{{$errors->first('over_name_kana')}}</span><br>
+                    <span class="error_message">{{$errors->first('under_name_kana')}}</span>
+                    @endif
                     <div class="mt-3">
                         <label class="m-0 d-block" style="font-size:13px">メールアドレス</label>
                         <div class="border-bottom border-primary">
                             <input type="mail" class="w-100 border-0 mail_address" name="mail_address">
                         </div>
                     </div>
-
-                    <!-- <span class="help-block">{{$errors->first('mail_address')}}</span> -->
-
+                    @if($errors->first('mail_address'))
+                    <span class="error_message">{{$errors->first('mail_address')}}</span>
+                    @endif
                 </div>
                 <div class="mt-3">
                     <input type="radio" name="sex" class="sex" value="1">
@@ -71,6 +71,9 @@
                     <input type="radio" name="sex" class="sex" value="3">
                     <label style="font-size:13px">その他</label>
                 </div>
+                @if($errors->first('over_name','under_name'))
+                <span class="error_message">{{$errors->first('sex')}}</span>
+                @endif
                 <div class="mt-3">
                     <label class="d-block m-0 aa" style="font-size:13px">生年月日</label>
                     <select class="old_year" name="old_year">
@@ -101,6 +104,7 @@
                         <option value="2008">2008</option>
                         <option value="2009">2009</option>
                         <option value="2010">2010</option>
+                        <option value="2100">2100</option>
                     </select>
                     <label style="font-size:13px">年</label>
                     <select class="old_month" name="old_month">
@@ -155,6 +159,12 @@
                     </select>
                     <label style="font-size:13px">月</label>
                 </div>
+                @if($errors->first('old_year','old_month','old_day','birth_day'))
+                <span class="error_message">{{$errors->first('old_year')}}</span><br>
+                <span class="error_message">{{$errors->first('old_month')}}</span><br>
+                <span class="error_message">{{$errors->first('old_day')}}</span><br>
+                <span class="error_message">{{$errors->first('birth_day')}}</span>
+                @endif
                 <div class="mt-3">
                     <label class="d-block m-0" style="font-size:13px">役職</label>
                     <input type="radio" name="role" class="admin_role role" value="1">
@@ -166,6 +176,7 @@
                     <input type="radio" name="role" class="other_role role" value="4">
                     <label style="font-size:13px" class="other_role">生徒</label>
                 </div>
+                <span class="error_message">{{$errors->first('role')}}</span>
                 <div class="select_teacher d-none">
                     <label class="d-block m-0" style="font-size:13px">選択科目</label>
                     @foreach($subjects as $subject)
@@ -181,12 +192,18 @@
                         <input type="password" class="border-0 w-100 password" name="password">
                     </div>
                 </div>
+                @if($errors->first('password'))
+                <span class="error_message">{{$errors->first('password')}}</span>
+                @endif
                 <div class="mt-3">
                     <label class="d-block m-0" style="font-size:13px">確認用パスワード</label>
                     <div class="border-bottom border-primary">
                         <input type="password" class="border-0 w-100 password_confirmation" name="password_confirmation">
                     </div>
                 </div>
+                @if($errors->first('password_confirmation'))
+                <span class="error_message">{{$errors->first('password_confirmation')}}</span>
+                @endif
                 <div class="mt-5 text-right">
                     <input type="submit" class="btn btn-primary register_btn"  value="新規登録" onclick="return confirm('登録してよろしいですか？')">
                 </div>
@@ -197,11 +214,6 @@
             {{ csrf_field() }}
         </div>
     </form>
-        <div class="error">
-    @foreach ($errors->all() as $error)
-    <li>{{$error}}</li>
-    @endforeach
-    </div>
     <!-- </div> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/register.js') }}" rel="stylesheet"></script>
