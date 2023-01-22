@@ -26,17 +26,20 @@ class PostsController extends Controller
         $post_comment = new Post;
         if(!empty($request->keyword)){
             $posts = Post::with('user', 'postComments')
+            // ->whereHas('subCategories',function($q)use($request){
+            //     $id=subCategory::where('sub_category',$request->keyword)->first();
+            //     // if(!empty($id)){
+            //     $q->where('sub_category_id',$id->id);
+            // // }
+            // })*****要編集　サブカテゴリーの完全一致
             ->where('post_title', 'like', '%'.$request->keyword.'%')
-            ->orWhere('post', 'like', '%'.$request->keyword.'%')->get();
-        }else if($request->category_word){//値だと動くけど変数入れるとおかしくなる
+            ->orWhere('post', 'like', '%'.$request->keyword.'%')
+            ->get();
+        }else if($request->category_word){
             $category_word = $request->category_word;
-            $sub_category_id=subCategory::where('sub_category',$category_word)->get('id');
-            // dd($sub_category_id);
-            $post_id=Post::whereHas('subCategories',function($q)use($sub_category_id){
-                $q->where('sub_category_id',$sub_category_id);
-            })->get('id');
-            dd($post_id);
-            $posts = Post::with('user', 'postComments')->where('id',$post_id)->get();
+            $posts = Post::with('user', 'postComments')->whereHas('subCategories',function($q)use($category_word){
+                $q->where('sub_category',$category_word);
+            })->get();
         }else if($request->like_posts){
             $likes = Auth::user()->likePostId()->get('like_post_id');
             $posts = Post::with('user', 'postComments')
@@ -50,7 +53,8 @@ class PostsController extends Controller
 
     public function postDetail($post_id){
         $post = Post::with('user', 'postComments')->findOrFail($post_id);
-        return view('authenticated.bulletinboard.post_detail', compact('post'));
+        $sub_category=$post->subCategories()->first();
+        return view('authenticated.bulletinboard.post_detail', compact('post','sub_category'));
     }
 
     public function postInput(){
@@ -100,6 +104,8 @@ class PostsController extends Controller
     }
 
     public function commentCreate(Request $request){
+        $this->validate($request,[
+            'comment'=>'required|string|max:2500']);
         PostComment::create([
             'post_id' => $request->post_id,
             'user_id' => Auth::id(),
