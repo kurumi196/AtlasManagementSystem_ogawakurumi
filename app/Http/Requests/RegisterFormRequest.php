@@ -22,17 +22,6 @@ class RegisterFormRequest extends FormRequest
      * @return array
      */
 
-    // public function birthdayValidator(){
-    //         $old_year = $this->input('old_year');
-    //         $old_month = $this->input('old_month');
-    //         $old_day = $this->input('old_day');
-    //         $date = $old_year . '-' . $old_month . '-' . $old_day;
-    //         $birth_day = date('Y-m-d', strtotime($date));
-    //         $this->marge(['birth_day'=>$birth_day]);
-    //         dd($birth_day);
-    //         return parent::birthdayValidator();
-    // }
-
     protected function prepareForValidation(){
             $old_year = $this->input('old_year');
             $old_month = $this->input('old_month');
@@ -40,8 +29,6 @@ class RegisterFormRequest extends FormRequest
             $date = $old_year . '-' . $old_month . '-' . $old_day;
             $birth_day = date('Y-m-d', strtotime($date));
             $this->merge(['birth_day'=>$birth_day]);
-            // dd($birth_day);
-            // return parent::prepareForValidation();
     }
 
     public function rules()
@@ -63,6 +50,15 @@ class RegisterFormRequest extends FormRequest
         ];
     }
 
-
-
+    public function messages(){
+        return [
+            'old_year.required'=>'年は必須項目です。',
+            'old_month.required'=>'月は必須項目です。',
+            'old_day.required'=>'日は必須項目です。',
+            'birth_day.required'=>'生年月日は必須項目です。',
+            'birth_day.date'=>'不正な日付です。',
+            'birth_day.after_or_equal' => '2000年1月1日以降で指定してください。',
+            'birth_day.before' => '選択できない日付です。',
+        ];
+    }
 }
