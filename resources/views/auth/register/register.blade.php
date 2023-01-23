@@ -31,9 +31,11 @@
                             </div>
                         </div>
                     </div>
-                    @if($errors->first('over_name','under_name'))
+                    @if($errors->first('over_name'))
                     <span class="error_message">{{$errors->first('over_name')}}</span><br>
-                    <span class="error_message">{{$errors->first('under_name')}}</span>
+                    @endif
+                    @if($errors->first('under_name'))
+                    <span class="error_message">{{$errors->first('under_name')}}</span><br>
                     @endif
                     <div class="d-flex mt-3" style="justify-content:space-between">
                         <div class="" style="width:140px">
@@ -49,8 +51,10 @@
                             </div>
                         </div>
                     </div>
-                    @if($errors->first('over_name','under_name'))
-                    <span class="error_message">{{$errors->first('over_name_kana')}}</span><br>
+                    @if($errors->first('over_name'))
+                    <span class="error_message">{{$errors->first('over_name_kana')}}</span>
+                    @endif
+                    @if($errors->first('under_name'))
                     <span class="error_message">{{$errors->first('under_name_kana')}}</span>
                     @endif
                     <div class="mt-3">
@@ -71,7 +75,7 @@
                     <input type="radio" name="sex" class="sex" value="3">
                     <label style="font-size:13px">その他</label>
                 </div>
-                @if($errors->first('over_name','under_name'))
+                @if($errors->first('sex'))
                 <span class="error_message">{{$errors->first('sex')}}</span>
                 @endif
                 <div class="mt-3">
@@ -159,10 +163,16 @@
                     </select>
                     <label style="font-size:13px">日</label>
                 </div>
-                @if($errors->first('old_year','old_month','old_day','birth_day'))
-                <span class="error_message">{{$errors->first('old_year')}}</span><br>
-                <span class="error_message">{{$errors->first('old_month')}}</span><br>
-                <span class="error_message">{{$errors->first('old_day')}}</span><br>
+                @if($errors->first('old_year'))
+                <span class="error_message">{{$errors->first('old_year')}}</span>
+                @endif
+                @if($errors->first('old_month'))
+                <span class="error_message">{{$errors->first('old_month')}}</span>
+                @endif
+                @if($errors->first('old_day'))
+                <span class="error_message">{{$errors->first('old_day')}}</span>
+                @endif
+                @if($errors->first('birth_day'))
                 <span class="error_message">{{$errors->first('birth_day')}}</span>
                 @endif
                 <div class="mt-3">
