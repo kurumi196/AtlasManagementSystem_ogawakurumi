@@ -11,7 +11,6 @@ use App\Models\Posts\PostComment;
 use App\Models\Posts\Like;
 use App\Models\Users\User;
 use App\Http\Requests\BulletinBoard\PostFormRequest;
-use App\Http\Requests\BulletinBoard\CategoryCreateRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -69,6 +68,8 @@ class PostsController extends Controller
             'post_title' => $request->post_title,
             'post' => $request->post_body
         ]);
+        $this->validate($request,[
+            'post_category_id'=>'required|exists:sub_categories,id']);
         $post_category_id=$request->post_category_id;
         $sub_category = Post::findOrFail($post->id);
         $sub_category->subCategories()->attach($post_category_id);
