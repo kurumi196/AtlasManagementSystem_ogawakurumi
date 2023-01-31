@@ -50,9 +50,6 @@ class CalendarWeekDay{
 
         $html = [];
 
-        // if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
-        // $html = [];
-        // }else{
         $html[] = '<select name="getPart[]" class="border-primary" style="width:70px; border-radius:5px;" form="reserveParts">';
         $html[] = '<option value="" selected></option>';
         if($one_part_frame == "0"){
@@ -71,7 +68,6 @@ class CalendarWeekDay{
         $html[] = '<option value="3">リモ3部(残り'.$three_part_frame.'枠)</option>';
         }
         $html[] = '</select>';
-    // }
         return implode('', $html);
     }
 
