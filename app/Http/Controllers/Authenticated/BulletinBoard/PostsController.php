@@ -18,35 +18,32 @@ use Auth;
 class PostsController extends Controller
 {
     public function show(Request $request){
-        $posts = Post::with('user', 'postComments')->get();
+        $posts = Post::with('user', 'postComments','subCategories')->get();
         $categories = MainCategory::get();
         $sub_categories=SubCategory::get();
         $like = new Like;
         $post_comment = new Post;
         if(!empty($request->keyword)){
-            $posts = Post::with('user', 'postComments')
-            // ->whereHas('subCategories',function($q)use($request){
-            //     $id=subCategory::where('sub_category',$request->keyword)->first();
-            //     // if(!empty($id)){
-            //     $q->where('sub_category_id',$id->id);
-            // // }
-            // })*****要編集　サブカテゴリーの完全一致
+            $posts = Post::with('user', 'postComments','subCategories')
             ->where('post_title', 'like', '%'.$request->keyword.'%')
-            ->orWhere('post', 'like', '%'.$request->keyword.'%')
-            ->get();
+            ->orWhereHas('subCategories',function($q)use($request){
+                $q->where('sub_category',$request->keyword);
+            })
+            ->orWhere('post', 'like', '%'.$request->keyword.'%')->get();
         }else if($request->category_word){
             $category_word = $request->category_word;
-            $posts = Post::with('user', 'postComments')->whereHas('subCategories',function($q)use($category_word){
+            $posts = Post::with('user', 'postComments','subCategories')->whereHas('subCategories',function($q)use($category_word){
                 $q->where('sub_category',$category_word);
             })->get();
         }else if($request->like_posts){
             $likes = Auth::user()->likePostId()->get('like_post_id');
-            $posts = Post::with('user', 'postComments')
+            $posts = Post::with('user', 'postComments','subCategories')
             ->whereIn('id', $likes)->get();
         }else if($request->my_posts){
-            $posts = Post::with('user', 'postComments')
+            $posts = Post::with('user', 'postComments','subCategories')
             ->where('user_id', Auth::id())->get();
         }
+        // dd($posts);
         return view('authenticated.bulletinboard.posts', compact('posts', 'categories','sub_categories', 'like', 'post_comment'));
     }
 
