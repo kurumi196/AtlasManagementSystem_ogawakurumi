@@ -9,9 +9,9 @@
                         <p class='category_btn'>{{ $sub_category->sub_category}}</p>
                     </div>
                     @if($post->user_id == Auth()->id())
-                    <div>
-                        <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
-                        <a href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('この投稿を削除します。よろしいでしょうか？')">削除</a>
+                    <div class="mb-1 d-flex">
+                        <span class="edit-modal-open edit_btn d-block" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
+                        <a class="delete_btn d-block" href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('この投稿を削除します。よろしいでしょうか？')">削除</a>
                     </div>
                     @endif
                 </div>
@@ -23,19 +23,19 @@
                     </p>
                     <span class="ml-5">{{ $post->created_at }}</span>
                 </div>
-                <div class="detsail_post_title">{{ $post->post_title }}</div>
-                <div class="mt-3 detsail_post">{{ $post->post }}</div>
+                <div class="detail_post_title post_title">{{ $post->post_title }}</div>
+                <div class="mt-3 detail_post">{{ $post->post }}</div>
             </div>
             <div class="p-3">
                 <div class="comment_container">
                     <span class="">コメント</span>
                     @foreach($post->postComments as $comment)
                     <div class="comment_area border-top">
-                        <p>
+                        <p class="contributor">
                         <span>{{ $comment->commentUser($comment->user_id)->over_name }}</span>
                         <span>{{ $comment->commentUser($comment->user_id)->under_name }}</span>さん
                         </p>
-                        <p>{{ $comment->comment }}</p>
+                        <pre>{{ $comment->comment }}</pre>
                     </div>
                     @endforeach
                 </div>
@@ -77,7 +77,7 @@
                 <div class="w-50 m-auto edit-modal-btn d-flex">
                     <a class="js-modal-close btn btn-danger d-inline-block" href="">閉じる</a>
                     <input type="hidden" class="edit-modal-hidden" name="post_id" value="{{$post->id}}" form="postEdit">
-                    <input type="submit" class="btn btn-primary d-block" value="編集" form="postEdit">
+                    <input type="submit" class="btn btn-primary d-block" value="編集" form="postEdit" onclick="return confirm('この投稿を更新します。よろしいでしょうか？')">
                 </div>
             </div>
         {{ csrf_field() }}
