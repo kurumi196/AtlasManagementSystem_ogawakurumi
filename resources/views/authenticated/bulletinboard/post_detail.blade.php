@@ -10,8 +10,8 @@
                     </div>
                     @if($post->user_id == Auth()->id())
                     <div class="mb-1 d-flex">
-                        <span class="edit-modal-open edit_btn d-block" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
-                        <a class="delete_btn d-block" href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('この投稿を削除します。よろしいでしょうか？')">削除</a>
+                        <span class="edit-modal-open edit_btn d-block px-2" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
+                        <a class="delete_btn d-block px-2" href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('この投稿を削除します。よろしいでしょうか？')">削除</a>
                     </div>
                     @endif
                 </div>
@@ -45,8 +45,8 @@
     <div class="w-50 p-3">
         <div class="comment_container border m-5">
             <div class="comment_area p-3">
-                <p class="m-0">コメントする</p>
-                <textarea class="w-100" name="comment" form="commentRequest"></textarea>
+                <p class="m-0 post_title">コメントする</p>
+                <textarea class="w-100 my-1" name="comment" form="commentRequest"></textarea>
                 <input type="hidden" name="post_id" form="commentRequest" value="{{ $post->id }}">
                 @if($errors->first('comment'))
                 <span class="error_message">{{ $errors->first('comment') }}</span><br>

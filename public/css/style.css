@@ -152,6 +152,7 @@ li {
 
 .detail_container {
     background: #FFF;
+    border-radius: 10px;
 }
 
 .post_area {
@@ -220,6 +221,11 @@ li {
     letter-spacing: 5px;
 }
 
+/* 掲示板 新規投稿画面 */
+select {
+    height: 28px;
+}
+
 /* 掲示板 詳細画面 */
 .contributor {
     font-size: 12px;
@@ -282,9 +288,14 @@ li {
     color: #fff;
 }
 
+.search_btn {
+    background-color: #00B4DB;
+}
+
 /* 掲示板 コメント */
 .comment_container {
     background: #FFF;
+    border-radius: 10px;
 }
 
 .comment_area p,
@@ -333,21 +344,23 @@ pre {
 }
 
 /* ユーザー検索 */
-.search_content div p {
+
+.search_content div .title {
     width: 800px;
-    margin: 10px auto;
-    padding: 10px;
+    margin: 0px auto;
+    margin-top: 10px;
+    padding: 10px 10px 0 15px;
 }
 
 .reserve_users_area {
     display: flex;
     flex-wrap: wrap;
     width: 800px;
-    margin: 10px auto;
-    height: 80vh;
+    margin: 0px auto;
+    /* height: 80vh; */
     overflow: scroll;
     padding: 10px;
-    background: #FFF;
+    /* background: #FFF; */
     border-radius: 5px;
 }
 
@@ -356,17 +369,117 @@ pre {
 }
 
 .one_person {
-    width: 250px;
+    width: 30%;
+    min-width: 250px;
     height: 250px;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    position: relative;
+    transition: .3s;
 }
 
-.search_conditions span {
+.reserve_users_area .on {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.person_status {
+    display: block;
+    width: 60px;
+    text-align: end;
+    margin-right: 15px;
+}
+
+.one_person span {
+    height: 25px;
+    text-decoration: none;
+}
+
+.one_person .person_name {
+    vertical-align: top;
+    color: #000;
+}
+
+.one_person a:hover {
+    text-decoration: none;
+}
+
+a.content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 0;
+}
+
+.search_area div div .free_word,
+.search_area div div select {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: .5rem;
+}
+
+.search_area div div label {
+    font-size: small;
+    margin: 0;
+}
+
+.search_conditions {
     cursor: pointer;
 }
+
+.search_conditions {
+    position: relative;
+}
+
+.search_conditions::after {
+    border-right: solid 2px #9E9E9E;
+    border-top: solid 2px #9E9E9E;
+    content: "";
+    display: block;
+    height: 8px;
+    position: absolute;
+    left: 120px;
+    top: 25%;
+    transform: rotate(135deg);
+    transition: transform .3s ease-in-out, top .3s ease-in-out;
+    width: 8px;
+}
+
+.search_conditions.open::after {
+    top: 40%;
+    transform: rotate(-45deg);
+}
+
 
 .search_conditions_inner {
     display: none;
     background: #FFF;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.reset_btn {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    border: none;
+    font-weight: bold;
+    font-size: small;
+    cursor: pointer;
+}
+
+.user_search_btn {
+    background-color: #00B4DB;
+    border: none;
+    border-radius: 10px;
+    padding: 3px 20px;
+    color: #FFF;
 }
 
 .subject_edit_btn {
@@ -377,4 +490,9 @@ pre {
 
 .subject_inner {
     display: none;
+}
+
+.one_subject label,
+.one_subject input {
+    cursor: pointer;
 }
