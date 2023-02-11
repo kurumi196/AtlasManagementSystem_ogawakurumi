@@ -26,8 +26,8 @@ class CalendarView{
         $html[] = '<th>水</th>';
         $html[] = '<th>木</th>';
         $html[] = '<th>金</th>';
-        $html[] = '<th>土</th>';
-        $html[] = '<th>日</th>';
+        $html[] = '<th class="day-sat">土</th>';
+        $html[] = '<th class="day-sun">日</th>';
         $html[] = '</tr>';
         $html[] = '</thead>';
         $html[] = '<tbody>';
@@ -61,16 +61,18 @@ class CalendarView{
                 $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">'.$reservePart.'</p>';
                 $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
             }else{//これから キャンセル実装！！！！！！！
-                $html[] = '<button type="submit" class="btn btn-danger p-0 w-75 edit-modal-open" name="delete_date" style="font-size:12px" value="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'" reserve_day="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'" reserve_part="'.$reservePart .'" reserve_setting_id="{{'.$day.'}}">'. $reservePart .'</button>';
+                $html[] = '<button type="submit" class="btn btn-danger p-0 w-75 edit-modal-open" name="delete_date" style="font-size:12px" value="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'" data-part="'.$reservePart.'" data-day="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'">'. $reservePart .'</button>';
                 $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
             }
             }else{//予約してないなら
-                if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){//過去日付
+            if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){//過去日付
                 $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">受付終了</p>';
-                }else{//これから
+                $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
+            }else{//これから
                 $html[] = $day->selectPart($day->everyDay());
-                }
             }
+            }
+
             $html[] = $day->getDate();
             $html[] = '</td>';
         }
@@ -80,7 +82,7 @@ class CalendarView{
         $html[] = '</table>';
         $html[] = '</div>';
         $html[] = '<form action="/reserve/calendar" method="post" id="reserveParts">'.csrf_field().'</form>';
-        $html[] = '<form action="/delete/calendar" method="post" id="deleteParts">'.csrf_field().'</form>';
+        // $html[] = '<form action="/delete/calendar" method="post" id="deleteParts">'.csrf_field().'</form>';
 
         return implode('', $html);
     }

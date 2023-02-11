@@ -18,18 +18,36 @@ li {
 
 /* サイドバー */
 .sidebar {
-    width: 150px;
+    width: 220px;
     height: 100vh;
-    background-color: #03AAD2;
+    background: linear-gradient(to bottom, #0083B0, #00B4DB);
     font-weight: bold;
 }
 
 .main-container {
     width: 100%;
+    height: 100vh;
+    overflow: auto;
 }
 
 .sidebar p a {
+    transition: 0.3s ease-in-out;
     color: #FFF;
+    display: block;
+    padding: 10px 0px 10px 10px;
+    margin-bottom: 2px;
+}
+
+.sidebar p a:hover {
+    transition: 0.3s ease-in-out;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-left: 10px;
+}
+
+/* content共通 */
+.title {
+    font-size: 20px;
 }
 
 /* トップページ */
@@ -38,17 +56,27 @@ li {
     background: #FFF;
 }
 
+.user_status p {
+    display: block;
+    width: 100px;
+    text-align: end;
+    margin-right: 30px;
+}
+
 /* スクール予約関連 */
 .day-blank {
     background: #D3D3D3;
 }
 
 .day-sat {
-    color: #0000FF;
+    color: #4d4dff;
+    /* background-color: rgba(0, 0, 255, 0.05); */
 }
 
 .day-sun {
-    color: #FF0000;
+    color: #ff4d4d;
+    /* background-color: rgba(255, 0, 0, 0.05); */
+
 }
 
 .past-day {
@@ -124,6 +152,7 @@ li {
 
 .detail_container {
     background: #FFF;
+    border-radius: 10px;
 }
 
 .post_area {
@@ -145,9 +174,56 @@ li {
     color: #E2254D;
 }
 
+.post_individual {
+    transition: .3s ease-in-out;
+}
+
+.on {
+    transition: .3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.post_title a,
+.post_title {
+    transition: .3S;
+    color: #494949;
+    font-weight: bold;
+    display: block;
+}
+
+.post_title a:hover {
+    text-decoration: none;
+    transition: .3S;
+    color: #00A4BB;
+}
+
 .error_message {
     font-size: 12px;
     color: red;
+}
+
+.post_btn button {
+    transition: .3s ease-in-out;
+    background-color: #00B4DB;
+    border-radius: 5px;
+    border: none;
+    height: 45px;
+}
+
+.post_btn button:hover {
+    transition: .3s ease-in-out;
+    background-color: #0092b3;
+}
+
+.post_btn button a {
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 5px;
+}
+
+/* 掲示板 新規投稿画面 */
+select {
+    height: 28px;
 }
 
 /* 掲示板 詳細画面 */
@@ -157,11 +233,11 @@ li {
     font-weight: bold;
 }
 
-.detsail_post_title {
+.detail_post_title {
     font-size: 14px;
 }
 
-.detsail_post {
+.detail_post {
     font-size: 12px;
     color: #9E9E9E;
 }
@@ -184,9 +260,42 @@ li {
     justify-content: space-between;
 }
 
+.category_box,
+.edit_btn,
+.delete_btn {
+    border-radius: 5px;
+    padding: 3px;
+    background: #999;
+    font-size: 10px;
+    color: #FFF;
+}
+
+.edit_btn {
+    background-color: #00B4DB;
+    padding: auto;
+    margin-bottom: 1rem;
+    margin-right: 5px;
+}
+
+.delete_btn {
+    background-color: #E2254D;
+    padding: auto;
+    margin-bottom: 1rem;
+}
+
+.delete_btn a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.search_btn {
+    background-color: #00B4DB;
+}
+
 /* 掲示板 コメント */
 .comment_container {
     background: #FFF;
+    border-radius: 10px;
 }
 
 .comment_area p,
@@ -208,18 +317,14 @@ li {
     font-size: 12px;
 }
 
+pre {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
 /* 掲示板　カテゴリー */
 .category_area {
     background: #FFF;
     border-radius: 10px;
-}
-
-.category_box {
-    border-radius: 5px;
-    padding: 3px;
-    background: #999;
-    font-size: 10px;
-    color: #FFF;
 }
 
 .category_btn {
@@ -239,15 +344,23 @@ li {
 }
 
 /* ユーザー検索 */
+
+.search_content div .title {
+    width: 800px;
+    margin: 0px auto;
+    margin-top: 10px;
+    padding: 10px 10px 0 15px;
+}
+
 .reserve_users_area {
     display: flex;
     flex-wrap: wrap;
     width: 800px;
-    margin: 10px auto;
-    height: 80vh;
+    margin: 0px auto;
+    /* height: 80vh; */
     overflow: scroll;
     padding: 10px;
-    background: #FFF;
+    /* background: #FFF; */
     border-radius: 5px;
 }
 
@@ -256,17 +369,117 @@ li {
 }
 
 .one_person {
-    width: 250px;
+    width: 30%;
+    min-width: 250px;
     height: 250px;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    position: relative;
+    transition: .3s;
 }
 
-.search_conditions span {
+.reserve_users_area .on {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.person_status {
+    display: block;
+    width: 60px;
+    text-align: end;
+    margin-right: 15px;
+}
+
+.one_person span {
+    height: 25px;
+    text-decoration: none;
+}
+
+.one_person .person_name {
+    vertical-align: top;
+    color: #000;
+}
+
+.one_person a:hover {
+    text-decoration: none;
+}
+
+a.content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 0;
+}
+
+.search_area div div .free_word,
+.search_area div div select {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: .5rem;
+}
+
+.search_area div div label {
+    font-size: small;
+    margin: 0;
+}
+
+.search_conditions {
     cursor: pointer;
 }
+
+.search_conditions {
+    position: relative;
+}
+
+.search_conditions::after {
+    border-right: solid 2px #9E9E9E;
+    border-top: solid 2px #9E9E9E;
+    content: "";
+    display: block;
+    height: 8px;
+    position: absolute;
+    left: 120px;
+    top: 25%;
+    transform: rotate(135deg);
+    transition: transform .3s ease-in-out, top .3s ease-in-out;
+    width: 8px;
+}
+
+.search_conditions.open::after {
+    top: 40%;
+    transform: rotate(-45deg);
+}
+
 
 .search_conditions_inner {
     display: none;
     background: #FFF;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.reset_btn {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    border: none;
+    font-weight: bold;
+    font-size: small;
+    cursor: pointer;
+}
+
+.user_search_btn {
+    background-color: #00B4DB;
+    border: none;
+    border-radius: 10px;
+    padding: 3px 20px;
+    color: #FFF;
 }
 
 .subject_edit_btn {
@@ -277,4 +490,9 @@ li {
 
 .subject_inner {
     display: none;
+}
+
+.one_subject label,
+.one_subject input {
+    cursor: pointer;
 }
