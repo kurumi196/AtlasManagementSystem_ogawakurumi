@@ -32,7 +32,7 @@ li {
 
 .sidebar p a {
     transition: 0.3s ease-in-out;
-    color: #FFF;
+    color: rgba(255, 255, 255, 0.8);
     display: block;
     padding: 10px 0px 10px 10px;
     margin-bottom: 2px;
@@ -41,6 +41,7 @@ li {
 .sidebar p a:hover {
     transition: 0.3s ease-in-out;
     text-decoration: none;
+    color: #FFF;
     background-color: rgba(0, 0, 0, 0.2);
     margin-left: 10px;
 }
