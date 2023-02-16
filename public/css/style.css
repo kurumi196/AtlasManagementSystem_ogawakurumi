@@ -109,6 +109,10 @@ li {
     width: 70%;
 }
 
+.reserve_detail_text tr {
+    margin-bottom: 0.5rem;
+}
+
 /* モーダル */
 .modal {
     display: none;
